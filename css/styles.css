@@ -157,9 +157,7 @@ nav h1 a {
   background-color: #ccc;
   display: block;
   margin: 0;
-  max-width: 100%;
-  min-height: auto;
-  min-width: 100%;
+  width: 100%;
 }
 #restaurants-list li h1 {
   color: #f18200;
@@ -267,6 +265,7 @@ nav h1 a {
 }
 #reviews-list {
   margin: 0;
+  padding: 0;
 }
 #reviews-list li {
   background-color: #fff;
@@ -277,7 +276,7 @@ nav h1 a {
   overflow: hidden;
   padding: 0 5px 20px;
   position: relative;
-  width: 85%;
+  width: 90%;
   text-align: start;
 }
 #reviews-list li p {
