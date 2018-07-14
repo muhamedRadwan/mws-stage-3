@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#000"/>
+  <link rel="manifest" href="/manifest.json">
+  <link rel="stylesheet" src="//normalize-css.googlecode.com/svn/trunk/normalize.css" />
+  <link rel="stylesheet" href="css/styles.css">
+ 
+  <title>Restaurant Reviews</title>
+  <style>
+     body,li,p,td,th,ul{font-size:10pt;color:#333;font-family:Arial,Helvetica,sans-serif}body,h1,h2,h3,h4,h5,h6,li,p,td,th,ul{font-family:Arial,Helvetica,sans-serif}#footer,nav h1 a{color:#fff;text-transform:uppercase}#breadcrumb li a,a,a:focus,a:hover{text-decoration:none}body,p,td,th{line-height:1.5}body{background-color:#fdfdfd;margin:0;position:relative}a{color:#fff}a:focus,a:hover{color:#e4e4e4}a img{border:0 #fff}h1,h2,h3,h4,h5,h6{margin:0 0 20px}article,aside,canvas,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}#maincontent{background-color:#f3f3f3;min-height:100%}
+     #breadcrumb{padding:10px 40px 16px;list-style:none;background-color:#eee;font-size:17px;margin:0;width:calc(50% - 80px)}#breadcrumb li{display:inline}#breadcrumb li+li:before{padding:8px;color:#000;content:"/\00a0"}#breadcrumb li a{color:#0275d8}#breadcrumb li a:hover{color:#01447e;text-decoration:underline}#map{height:400px;width:100%;background-color:#ccc}.filter-options{display:flex;width:100%;background-color:#185d8c;flex-grow:1;flex-direction:column;align-items:center}.filter-options h2{color:#fff;font-size:1rem;font-weight:400;line-height:1;margin:0 20px}#restaurant-name,#restaurants-list li h1{color:#f18200;font-family:Arial,sans-serif;font-weight:200;letter-spacing:0;text-transform:uppercase}.filter-options select{background-color:#fff;border:1px solid #fff;font-family:Arial,sans-serif;font-size:11pt;height:35px;letter-spacing:0;margin:10px;padding:0 10px;width:90%}#restaurants-list{background-color:#f3f3f3;list-style:none;margin:AUTO;padding:15px 15px 60px;text-align:center;display:FLEX;flex-wrap:wrap}#restaurants-list li{background-color:#fff;border:2px solid #ccc;font-family:Arial,sans-serif;margin:15px auto;padding:0 30px 25px;width:240px;min-height:444px;display:flex;flex-direction:column}
+    </style>
+</head>
+<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+<script>
+  // Shorthand for $( document ).ready()
+$(function() {
+   $("body").addClass("loaded");
+});
+</script> -->
+<body class="">
+    <div id="loader-wrapper">
+        <div id="loader"></div>
+     
+        <div class="loader-section section-left"></div>
+        <div class="loader-section section-right"></div>
+     
+    </div>
+  <header>
+    <nav>
+      <h1><a href="/">Restaurant Reviews</a></h1>
+    </nav>
+  </header>
+
+  <main id="maincontent">
+    <section class="button_map_cont">
+        <input type="button" class="button_map" value="Show Map" aria="button" onclick="toggleMap(this);">
+    </section> 
+    <section id="map-container"  style="display:none">
+      <div id="map" role="application"></div>
+    </section>
+    <section>
+      <div class="filter-options" aria="Filter Options">
+        <h2>Filter Results</h2>
+        <select  tabindex="0" aria-label="Select Neighborhood" id="neighborhoods-select" name="neighborhoods" onchange="updateRestaurants()">
+          <option value="all">All Neighborhoods</option>
+        </select>
+        <select  aria-label="Select Cusisine" id="cuisines-select" name="cuisines" onchange="updateRestaurants()">
+          <option value="all">All Cuisines</option>
+        </select>
+      </div>
+      <ul id="restaurants-list" role='tree'></ul>
+    </section>
+  </main>
+
+  <script type="application/javascript" charset="utf-8" src="js/dbhelper.js"></script>
+  <script type="application/javascript" charset="utf-8" src="js/main.js"></script>
+  <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function () {
+          navigator.serviceWorker.register('sw.js').then(function (registration) {
+            console.log('ServiceWorker registration successful with scope: ', registration.scope);
+          }, function (err) {
+            console.log('ServiceWorker registration failed: ', err);
+          });
+        });
+      }
+    var show = false;
+    const Gmap = document.getElementById("map-container");
+    function toggleMap(element){
+      if(!show){
+        show= true;
+        Gmap.style.display = "block";
+        element.value = "Hide Map";
+        let script = document.getElementById("maping");
+        script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyDoxndCEXzBUyekp5wFDct9a_0SHTiqHIQ&libraries=places&callback=initMap";
+        
+      }else{
+        show = false;
+        Gmap.style.display = "none";
+        element.value = "Show Map";
+      }
+    }
+    </script>
+    <script id="maping" async defer src=""></script>
+
+  <footer id="footer">
+    Copyright (c) 2017 <a href="/"><strong>Restaurant Reviews</strong></a> All Rights Reserved.
+  </footer>
+  
+  <script>
+    window.addEventListener('load', function() {
+        var images = document.querySelectorAll('img.lazy[data-src]');
+        images.forEach((image) => {
+          if ((image.getBoundingClientRect().top) <= window.innerHeight) {
+            getRealImage(image);
+          }
+        });
+      });
+  </script>
+</body>
+
+</html>
